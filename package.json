@@ -1,0 +1,47 @@
+{
+  "name": "reck",
+  "version": "0.0.2",
+  "description": "One react framework.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namelos/reck.git"
+  },
+  "keywords": [
+    "react",
+    "redux"
+  ],
+  "author": "namelos<namelos@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/namelos/reck/issues"
+  },
+  "homepage": "https://github.com/namelos/reck#readme",
+  "devDependencies": {
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "browser-sync": "^2.12.1",
+    "browser-sync-webpack-plugin": "^1.0.1",
+    "express": "^4.13.4",
+    "redux-devtools": "^3.2.0",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.9",
+    "redux-logger": "^2.6.1",
+    "webpack": "^1.12.15",
+    "webpack-dev-middleware": "^1.6.1"
+  },
+  "dependencies": {
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1",
+    "react-redux": "^4.4.2",
+    "react-router": "^2.1.1",
+    "react-router-redux": "^4.0.2",
+    "redux": "^3.4.0",
+    "redux-thunk": "^2.0.1"
+  }
+}
