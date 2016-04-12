@@ -10,21 +10,12 @@ import { reduxForm, reducer as form } from 'redux-form'
 
 import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
-import { createDevTools } from 'redux-devtools'
-import DockMonitor from 'redux-devtools-dock-monitor'
-import LogMonitor from 'redux-devtools-log-monitor'
 
-import { Counter } from './modules/counter'
+import { Counter } from './modules'
 
 const logger = createLogger()
 
-const DevTools = createDevTools(
-  <DockMonitor toggleVisibilityKey='ctrl-h'
-               changePositionKey='ctrl-q'
-               defaultIsVisible={true}>
-    <LogMonitor />
-  </DockMonitor>
-)
+import { DevTools } from './modules'
 
 const enhancer = compose(
   compose(applyMiddleware(thunk, logger),
@@ -32,7 +23,7 @@ const enhancer = compose(
 
 import reducer from './modules'
 
-const store = enhancer(createStore)(reducer)
+export const store = enhancer(createStore)(reducer)
 
 render(
   <Provider store={store}>
