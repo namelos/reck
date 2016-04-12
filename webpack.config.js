@@ -4,7 +4,7 @@ const BrowserSync = require('browser-sync-webpack-plugin')
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: './src/entry',
+  entry: './src/index',
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
