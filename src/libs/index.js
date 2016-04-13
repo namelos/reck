@@ -1,2 +1,2 @@
-export { default as reconnect } from './reconnect'
-export { default as createActions } from './createActions'
+export { default as bootstrap } from './bootstrap'
+export { default as addReducer } from './addReducer'

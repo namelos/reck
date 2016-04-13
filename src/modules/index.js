@@ -1,14 +1,17 @@
-import { combineReducers } from 'redux'
-import { routerReducer as routing } from 'react-router-redux'
-import { reducer as form } from 'redux-form'
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { createAction, createReducer } from 'redux-act'
+import { addReducer } from '../libs'
 
-export { default as DevTools } from './dev-tools'
-export { Counter } from './counter'
-import counter from './counter'
+const relux = (reducerName, initialState, handler, asyncHandler) => ComposedComponent => {
 
-export default combineReducers({
-  routing,
-  form,
-  counter
-})
+  addReducer(reducerName, handler, initialState)
 
+  const actions = Object.keys(handler).map(createAction)
+
+  return connect(
+    state => state,
+    dispatch => bindActionCreators({ ...actions, ...asyncHandler }, dispatch)
+  )
+}
