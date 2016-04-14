@@ -1,73 +1,48 @@
 import React, {Component} from 'react'
-import {render} from 'react-dom'
-import {combineReducers, applyMiddleware, createStore, compose} from 'redux'
-import {Provider} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {connect} from 'react-redux'
-import {reducer as form} from 'redux-form'
-import DevTools from './DevTools'
+import {reconnect, rerender} from './lib'
 
-const createReducer = (initialState, handlers) =>
-  (state = initialState, action) => {
-    if (handlers.hasOwnProperty(action.type))
-      return handlers[action.type](state, action.payload)
-    else
-      return state
-  }
-
-const createAction = type => payload => ({ type, payload })
-
-/* --- */
-
-const bindReducers = reducers =>
-  combineReducers({form, ...reducers})
-
-const enhancer = compose(DevTools.instrument())
-
-const store = enhancer(createStore)(bindReducers())
-store.reducers = {}
-
-store.addReducer = (name, reducer) => {
-  store.reducers[name] = reducer
-  store.replaceReducer(bindReducers(store.reducers))
-}
-
-const createDecorator = store => (reducerName, initialState, handler) => {
-  store.addReducer(reducerName, createReducer(initialState, handler))
-
-  const actionTypes = Object.keys(handler)
-  const actions = {}
-
-  actionTypes.forEach(action => actions[action] = createAction(action))
-
-  return connect(
-    state => state,
-    dispatch => bindActionCreators(actions, dispatch)
-  )
-}
-
-const reconnect = createDecorator(store)
-
-const Counter = reconnect('counter', 0, {
+@reconnect('counter1', 0, {
   increment: state => state + 1,
   decrement: state => state - 1
 })
-(({counter, increment, decrement}) => {
-  return (
-    <div>
-      <p>{ counter }</p>
-      <button onClick={increment}>inc</button>
-      <button onClick={decrement}>dec</button>
-    </div>
-  )
-})
+class Counter1 extends Component {
+  render() {
+    const {counter1, increment, decrement, counter1_increment, counter1_decrement} = this.props
+    return (
+      <div>
+        <p>{counter1}</p>
+        <button onClick={increment}>increment</button>
+        <button onClick={decrement}>decrement</button>
+        <br/>
+        <button onClick={counter1_increment}>counter1_increment</button>
+        <button onClick={counter1_decrement}>counter1_decrement</button>
+      </div>
+    )
+  }
+}
 
-render(
-  <Provider store={store}>
-    <div>
-      <Counter />
-      <DevTools />
-    </div>
-  </Provider>,
-  document.querySelector('#app')
-)
+@reconnect('counter2', 0, {
+  increment: state => state + 1,
+  decrement: state => state - 1
+})
+class Counter2 extends Component {
+  render() {
+    const {counter2, increment, decrement, counter2_increment, counter2_decrement} = this.props
+    return (
+      <div>
+        <p>{counter2}</p>
+        <button onClick={increment}>increment</button>
+        <button onClick={decrement}>decrement</button>
+        <br/>
+        <button onClick={counter2_increment}>counter2_increment</button>
+        <button onClick={counter2_decrement}>counter2_decrement</button>
+      </div>
+    )
+  }
+}
+
+rerender(
+  <div>
+    <Counter1 />
+    <Counter2 />
+  </div>, document.querySelector('#app'))
