@@ -42,10 +42,7 @@ const createDecorator = store => (reducerName, initialState, handler) => {
 
   return connect(
     state => state,
-    dispatch => bindActionCreators({
-      increment: createAction('increment'),
-      decrement: createAction('decrement')
-    }, dispatch)
+    dispatch => bindActionCreators(actions, dispatch)
   )
 }
 
