@@ -5,6 +5,7 @@ import { createAction, createReducer } from 'redux-act'
 import { addReducer } from '../libs'
 
 const relux = (reducerName, initialState, handler, asyncHandler) => ComposedComponent => {
+  
 
   addReducer(reducerName, handler, initialState)
 
