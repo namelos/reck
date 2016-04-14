@@ -31,16 +31,6 @@ store.addReducer = (name, reducer) => {
 }
 
 const createDecorator = store => {
-  // store.addReducer('counter', (state = 0, action) => {
-  //   switch (action.type) {
-  //     case 'INCREMENT':
-  //       return state + 1
-  //     case 'DECREMENT':
-  //       return state - 1
-  //     default:
-  //       return state
-  //   }
-  // })
   store.addReducer('counter', createReducer(0, {
     increment: state => state + 1,
     decrement: state => state - 1
