@@ -39,14 +39,23 @@ const nameActions = (namespace, namedHandlers) => {
   return actions
 }
 
-export default store => (reducerName, initialState, handlers, asyncHandlers) => {
+const ahandlers = {
+  async: (dispatch, getState) => {
+
+  }
+}
+
+export default store => (reducerName, initialState, handlers) => {
   const namespace = `${reducerName}_`
 
   const namedHandlers = nameHandlers(namespace, handlers)
 
+  const actions = nameActions(namespace, namedHandlers)
+
   store.addReducer(reducerName, createReducer(initialState, namedHandlers))
 
-  const actions =  nameActions(namespace, namedHandlers)
+  const async = callback =>
+    callback(store.dispatch, store.getState)
 
   return connect(
     state => state,

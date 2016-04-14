@@ -6,11 +6,13 @@ import {reconnect, rerender} from './lib'
   decrement: state => state - 1,
   counter2_increment: null,
   counter2_decrement: null
+}, {
+  fetch: (dispatch, getState) => dispatch('counter2_increment')
 })
 class Counter1 extends Component {
   render() {
     const {counter1, increment, decrement, counter1_increment, counter1_decrement,
-      counter2_increment, counter2_decrement } = this.props
+      counter2_increment, counter2_decrement, async } = this.props
     return (
       <div>
         <p>{counter1}</p>
@@ -22,6 +24,8 @@ class Counter1 extends Component {
         <br/>
         <button onClick={counter2_increment}>counter2_increment</button>
         <button onClick={counter2_decrement}>counter2_decrement</button>
+        <br/>
+        <button onClick={async}>async</button>
       </div>
     )
   }
