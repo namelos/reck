@@ -10,7 +10,6 @@ const nameHandlers = (namespace, handlers) => {
       namedHandlers[`${namespace}${key}`] = handlers[key]
     } else if (key.indexOf('_') === 0) {
       namedHandlers[key.slice(1, key.length)] = handlers[key]
-      debugger
     } else {
       namedHandlers[key] = handlers[key]
     }
@@ -41,12 +40,6 @@ const nameActions = (namespace, namedHandlers) => {
   })
 
   return actions
-}
-
-const ahandlers = {
-  async: (dispatch, getState) => {
-
-  }
 }
 
 export default store => (reducerName, initialState, handlers) => {
