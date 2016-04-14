@@ -15,6 +15,8 @@ const createReducer = (initialState, handlers) =>
       return state
   }
 
+const createAction = type => payload => ({ type, payload })
+
 /* --- */
 
 const bindReducers = reducers =>
@@ -30,24 +32,29 @@ store.addReducer = (name, reducer) => {
   store.replaceReducer(bindReducers(store.reducers))
 }
 
-const createDecorator = store => {
-  store.addReducer('counter', createReducer(0, {
-    increment: state => state + 1,
-    decrement: state => state - 1
-  }))
+const createDecorator = store => (reducerName, initialState, handler) => {
+  store.addReducer(reducerName, createReducer(initialState, handler))
+
+  const actionTypes = Object.keys(handler)
+  const actions = {}
+
+  actionTypes.forEach(action => actions[action] = createAction(action))
 
   return connect(
     state => state,
     dispatch => bindActionCreators({
-      increment: () => ({type: 'increment'}),
-      decrement: () => ({type: 'decrement'})
+      increment: createAction('increment'),
+      decrement: createAction('decrement')
     }, dispatch)
   )
 }
 
-const decorator = createDecorator(store)
+const reconnect = createDecorator(store)
 
-const Counter = decorator
+const Counter = reconnect('counter', 0, {
+  increment: state => state + 1,
+  decrement: state => state - 1
+})
 (({counter, increment, decrement}) => {
   return (
     <div>
