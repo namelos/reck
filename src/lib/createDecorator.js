@@ -6,10 +6,14 @@ const nameHandlers = (namespace, handlers) => {
   const namedHandlers = {}
 
   handlers::map((value, key) => {
-    if (key.indexOf('_') === -1)
+    if (key.indexOf('_') === -1) {
       namedHandlers[`${namespace}${key}`] = handlers[key]
-    else
+    } else if (key.indexOf('_') === 0) {
+      namedHandlers[key.slice(1, key.length)] = handlers[key]
+      debugger
+    } else {
       namedHandlers[key] = handlers[key]
+    }
   })
 
   namedHandlers::map(handlerCallback => {
@@ -51,6 +55,8 @@ export default store => (reducerName, initialState, handlers) => {
   const namedHandlers = nameHandlers(namespace, handlers)
 
   const actions = nameActions(namespace, namedHandlers)
+
+  console.log(actions)
 
   store.addReducer(reducerName, createReducer(initialState, namedHandlers))
 
